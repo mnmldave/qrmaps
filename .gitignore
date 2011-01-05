@@ -1,0 +1,6 @@
+.DS_Store
+target
+dist
+src.pem
+build
+pkg

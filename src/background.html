@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <script type="text/javascript" src="jquery-1.4.2.min.js"></script>
+        <script>
+            /**
+             * Shortens a URL using the goo.gl service.
+             * @param options a map containing a url
+             * @param callback function to receive the json response
+             */
+            function shortenUrl(options, callback) {
+                $.ajax({
+                    dataType: 'json',
+                    type: 'POST',
+                    url: 'http://goo.gl/api/url?url=' + encodeURIComponent(options.url),
+                    success: callback
+                });
+            }
+
+            chrome.extension.onRequest.addListener(function(request, sender, callback) {
+                if (request.action == 'shortenUrl') {
+                    shortenUrl(request.options, callback);
+                }
+            });
+        </script>
+    </body>
+</html>

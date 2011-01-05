@@ -1,0 +1,62 @@
+/*
+ * Copyright 2010 Dave Heaton
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#qrcode_container {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	z-index: 10;
+	top: 0;
+	left: 0;
+	background-color: rgba(102,102,102,0.7);
+}
+
+#qrcode_content {
+	background-color: #fff;
+	width: 400px;
+	height: 430px;
+	position: absolute;
+	left: 50%;
+	margin-left: -200px;
+	top: 50%;
+	margin-top: -215px;
+	border: 5px solid rgb(213, 221, 243);
+	box-shadow: 3px 3px 4px #000;
+}
+
+#qrcode_help {
+	height: 30px;
+}
+
+#qrcode_help img {
+	padding: 7px;
+}
+
+#qrcode_image {
+	cursor: pointer;
+}
+
+#qrcode img {
+	margin-right: 2px;
+}
+
+#qrcode_loader img {
+	position: relative;
+	left: 50%;
+	top: 50%;
+	margin-left: -16px;
+	margin-top: -16px;
+}
