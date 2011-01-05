@@ -1,7 +1,7 @@
 {
   "name": "QR Maps",
   "version": "0.1.3",
-  "description": "Quickly transfer Google Map locations to your smartphone with a scannable QR code.",
+  "description": "Transfer locations and directions from Google Maps to your smartphone using scannable QR codes.",
   "icons": {
     "16": "icon16.png",
     "32": "icon32.png",
