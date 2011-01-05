@@ -43,6 +43,9 @@
             }
             body {
             	line-height: 1;
+            	padding: 0;
+            	margin: 0;
+            	color: #333;
             }
             ol, ul {
             	list-style: none;
@@ -79,35 +82,33 @@
                 margin-bottom: 1em;
             }
             
+            a {
+              background-color: #eee;
+              padding: 2px 3px;
+              border-radius: 3px;
+              color: #333;
+              text-decoration: none;
+            }
+            
+            a:hover {
+              background-color: #ccc;
+              padding: 2px 3px;
+              border-radius: 3px;
+              color: #333;
+            }
+            
             #content {
-                width: 560px;
+                width: 600px;
                 margin: auto;
-                border: 1px solid #ccc;
-                padding: 20px;
-                border-radius: 5px;
-                background-color: #f4f4f4;
-                -webkit-box-shadow: inset 0px 2px 4px rgba(0,0,0,0.2);
             }
             
             #header {
                 background-image: url('icon48.png');
                 background-repeat: no-repeat;
-                background-position: top right;
+                background-position: top center;
                 width: 600px;
-                margin: auto;
-                margin-bottom: 40px;
+                margin: 64px auto;
                 min-height: 48px;
-            }
-            
-            #header h1 {
-                font-size: 48px;
-                font-weight: normal;
-                margin-bottom: 10px;
-                text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
-            }
-            #header h2 {
-                font-weight: normal;
-                font-size: 80%;
             }
             
             #footer {
@@ -122,12 +123,12 @@
                 background-color: #fff;
             }
             body {
-                padding: 40px;
                 font-size: 80%;
+                margin-bottom: 40px;
             }
             
             p, li {
-                line-height: 1.5;
+                line-height: 2;
             }
             p, ol, ul {
                 margin-bottom: 1em;
@@ -145,67 +146,63 @@
                 margin-bottom: 0.4em;
             }
             
+            #content h1 {
+              font-size: 200%;
+              font-family: "Georgia","Times New Roman",serif;
+              font-weight: normal;
+            }
+            
             .section {
                 margin-bottom: 40px;
             }
-            .section h1 {
-                font-size: 125%;
+            .section h2 {
+                font-size: 150%;
                 padding-bottom: 5px;
-                border-bottom: 1px solid #ccc;
+                font-family: "Georgia","Times New Roman",serif;
+                font-weight: normal;
             }
         </style>
     </head>
     <body>
         <div id="header">
-            <h1>QR Maps</h1>
         </div>
         <div id="content">
+            <h1>QR Maps</h1>
             <div class="section" id="instructions">
-                <h1>Instructions</h1>
                 <p>
                     QR Maps helps you get Google Map addresses onto your phone quickly
-                    and easily. To use it:
+                    and easily.
+                    Check out this <a href="http://www.youtube.com/watch?v=lBNEAQE2NAQ&amp;hd=1" title="YouTube - QR Maps">video</a>
+                    to see how to use it.
                 </p>
                 <ol>
                     <li>Find a location, or generate some directions on <a href="http://maps.google.com">Google Maps</a>.</li>
                     <li>Click the <img src="code_screenshot.png" alt="Code" title="Code"/> link (it's just above the top-right corner of the map).</li>
-                    <li>
-                        Scan the code on your screen using your phone's <a href="#readers">QR code reader</a>.
-                        <div style="text-align: center; margin-top: 1em">
-                            <img src="popup_screenshot.png" width="360" height="237"/>
-                        </div>
-                    </li>
+                    <li>Scan the code on your screen using your phone's QR code reader.</li>
                 </ol>
-                <p>
-                    Your phone should now be showing you the same location or 
-                    directions you were looking at on your computer.
-                </p>
             </div>
 
             <div class="section" id="support">
-                <h1>Support</h1>
+                <h2>Support</h2>
                 <p>
-                    This extension is open source, and you can find support
-                    on the <a href="http://code.google.com/p/qrmaps/">qrmaps project page</a>.
-                </p>
-                <p>
+                    This extension is open source, and you can find it
+                    on <a href="https://github.com/mnmldave/qrmaps/">github</a>. 
                     If you encounter any bugs, please report them on the
-                    <a href="http://code.google.com/p/qrmaps/issues/list" title="Issues - qrmaps - Project Hosting on Google Code">issues site</a>.
+                    <a href="https://github.com/mnmldave/qrmaps/issues">issues page</a>.
                 </p>
             </div>
             
             <div class="section" id="credits">
-                <h1>Credits</h1>
+                <h2>Credits</h2>
                 <p>
-                    Thanks to <a href="http://p.yusukekamiyamane.com/" title="p.yusukekamiyamane - Quality free icons and pixel fonts">Yusuke Kamiyamane</a> for making terrific free icons.
-                </p>
-                <p>
-                    This extension was written by <a href="http://bit155.com/blog/" title="bit155">Dave Heaton</a>.
+                    This extension was written by <a href="https://github.com/mnmldave">mnmldave</a> with
+                    many 
+                    thanks to <a href="http://p.yusukekamiyamane.com/" title="p.yusukekamiyamane - Quality free icons and pixel fonts">Yusuke Kamiyamane</a> for making terrific free icons.
                 </p>
             </div>
         </div>
         <div id="footer">
-            <div id="copyright">Copyright &copy; 2010 <a href="http://bit155.com">Dave Heaton</a></div>
+            <div id="copyright">Copyright &copy; 2010-2011 <a href="mailto:dave@bit155.com">Dave Heaton</a></div>
         </div>
     </body>
 </html>
