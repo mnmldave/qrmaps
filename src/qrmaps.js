@@ -1,90 +1,54 @@
-/*
- * qrmaps.js
- * dave.heaton@gmail.com
- *
- * Content script that adds a "Code" link to Google Maps pages which, when
- * clicked, displays a QR code linking to the location currently being viewed.
- *
- * Copyright 2010 Dave Heaton
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *     http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+/*!
+ * Copyright (c) 2010-2011 Dave Heaton.
+ * Freely distributable under the MIT license.
  */
 
-// store the link element, whose href is used in generating the code
-var link = $("#link");
+(function($) {
+  // store the link element, whose href is used in generating the code
+  var link = $("#link"),
+      dialog = $("<div>")
+          .attr('id', 'qrmaps-dialog')
+          .hide()
+          .click(function() { $(this).fadeOut('fast'); })
+          .appendTo($('#inner'));
 
-// create Container window (for popup)
-var container = $("<div>")
-	.attr('id', 'qrcode_container')
-	.hide()
-	.click(function() { container.fadeOut('fast'); })
-	.appendTo($('#inner'));
-	
-// hide Container whenever user presses a key
-$(window).keyup(function(event) { container.fadeOut('fast'); })
+  var showDialog = function(url) {
+    dialog.empty();
+    
+    if (url.length > 256) {
+      // shorten url and call recursively
+      var loader = $('<div>', { id: 'qrmaps-content' })
+          .append($('<div>', { id: 'qrmaps-loader' })
+              .append($('<img>', { src: chrome.extension.getURL('ajax-loader.gif') })));
 
-function container_show(url) {
-	var help = $('<a>')
-		.attr('href', chrome.extension.getURL('help.html'))
-		.attr('target', '_blank')
-		.append($('<img>').attr('src', chrome.extension.getURL('question-white.png')));
+      dialog.append(loader);
+      chrome.extension.sendRequest({
+            action: 'shortenUrl', 
+            options: {
+              url: url
+            }
+          }, function(data) { showDialog(data['short_url']); });
+    } else {
+      // turn url into qrcode
+      var help = $('<a>', { href: chrome.extension.getURL('help.html'), target: '_blank' })
+              .append($('<img>', { src: chrome.extension.getURL('question-white.png') })),
+          content = $('<div>', { id: 'qrmaps-content' })
+              .append($('<div>', { id: 'qrmaps-help' }).append(help))
+              .append($('<div>').append($('<img>', { id: 'qrmaps-image', src: 'http://chart.apis.google.com/chart?cht=qr&chs=400x400&chl=' + encodeURIComponent(url) })));
+      dialog.append(content);
+      $(window).one('keyup', function(event) { dialog.fadeOut('fast'); });
+    }
+    
+    dialog.fadeIn('fast');
+  };
 
-	var image = $('<img>')
-		.attr('id', 'qrcode_image')
-		.attr('src', 'http://chart.apis.google.com/chart?cht=qr&chs=400x400&chl=' + encodeURIComponent(url));
+  // create Code link
+  var code = $('<a>', { id: 'qrmaps', href: '#', 'class': 'kd-button right small' })
+      .append($('<img>').addClass("bar-icon").attr('src', chrome.extension.getURL("code.png")))
+      .click(function() { showDialog(link.attr('href')); return false; });
+  
+  link.removeClass('right').addClass('mid');
+  link.parent().width(142);
+  link.parent().append(code);
 
-	var content = $('<div>')
-		.attr('id', 'qrcode_content')
-		.append($('<div>').attr('id','qrcode_help').append(help))
-		.append($('<div>').append(image));
-
-	// clear container, insert the new image, fade it in
-	container.empty();
-	container.append(content);
-	container.fadeIn('fast');
-}
-
-// create Code link
-var code = $('<a id="qrcode" href="#">')
-	.append($('<img>').addClass("bar-icon").attr('src', chrome.extension.getURL("code.png")))
-	.append($('<span>').addClass("link-text").text('Code'))
-	.click(function() {
-		var long_url = link.attr('href');
-		
-		if (long_url.length > 256) {
-			var loader = $('<div>')
-				.attr('id', 'qrcode_content')
-				.append($('<div>').attr('id', 'qrcode_loader').append($('<img>').attr('src', chrome.extension.getURL('ajax-loader.gif'))));
-				
-			container.empty();
-			container.append(loader);
-			container.fadeIn('fast');
-			
-			chrome.extension.sendRequest({
-				action: 'shortenUrl', 
-				options: {
-					url: long_url
-				}
-			}, function(data) {
-				container_show(data['short_url']);
-			});
-		} else {
-			container_show(long_url);
-		}
-		
-		return false;
-	});
-
-// add Code link to the toolbar
-link.after(code);
-link.after(' <img src="http://maps.gstatic.com/intl/en_ALL/mapfiles/transparent.png" class="bar-icon-divider bar-divider" jstcache="0"> ');
+})(jQuery);
